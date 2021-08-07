@@ -6,7 +6,7 @@ this notebook is an experiment, take it as it is.
 Given a keyword (eg Google), the notebook will download the list of the RIPE and passively process it by collaborating with the API of shodan and censys to obtain information about the technologies and vulnerabilities found on the machines.
 
 # Requirements
-- Shodan membership https://www.shodan.io/store/member for search filters function
+- Shodan membership https://www.shodan.io/store/member to search filters function
 - Shodan API key
 - Censys API key
 # installation
