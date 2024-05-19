@@ -23,7 +23,7 @@ It uses non-invasive techniques to map the attack surface without directly inter
 
 -   `--update`: Update files in the `ripe_db` directory.
 -   `-v`, `--verbose`: Enable verbose mode.
--   `-r`, `--regex`: Target Regex (example: `-r "\\bcompany"`).
+-   `-r`, `--regex`: Target Regex (example: `-r "\bcompany"`).
 -   `-c`, `--csv`: Write results to a CSV file.
 -   `-j`, `--json`: Write results to a JSON file.
 -   `-o`, `--output`: Base name for output files (log, csv, json).
