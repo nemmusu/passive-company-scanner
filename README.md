@@ -3,6 +3,7 @@
 ## Overview
 
 The Passive Company Scanner, by inputting a regex containing the company name (for example: \bcompany), utilizes data from the RIPE db to identify involved networks and leverages the Shodan API to retrieve detailed information about the identified IP addresses, thereby conducting a passive perimeter search, discovering open ports, and identifying potential vulnerabilities in the organization's infrastructure.
+It uses non-invasive techniques to map the attack surface without directly interacting with the targets. 
 
 ## Requirements
 
