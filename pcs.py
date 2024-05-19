@@ -312,8 +312,8 @@ if __name__ == "__main__":
     signal.signal(signal.SIGINT, handle_sigint)
     parser = argparse.ArgumentParser(
         description='Passive Company Scanner: Script for passive perimeter search, open ports, vulnerabilities, and geographical information on an organization\'s infrastructure.',
-        usage='python3 passive_company_scanner.py --update -r "\\bcompany" -v',
-        epilog='Example: python3 passive_company_scanner.py --update -r "\\bcompany" -v -j -c -o output_filename')
+        usage='python3 pcs.py --update -r "\\bcompany" -v',
+        epilog='Example: python3 pcs.py --update -r "\\bcompany" -v -j -c -o output_filename')
     parser.add_argument('--update', action='store_true', help='Update files in the ripe_db directory')
     parser.add_argument('-v', '--verbose', action='store_true', help='Enable verbose mode')
     parser.add_argument('-r', '--regex', type=str, help='Target Regex example: -r "\\bcompany"')
