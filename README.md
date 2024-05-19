@@ -34,5 +34,5 @@ It uses non-invasive techniques to map the attack surface without directly inter
 bash
 
 ```bash
-python3 pcs.py -r "\\bcompany" -v -j -s -c -o output_filename
+python3 pcs.py -r "\bcompany" -v -j -s -c -o output_filename
 ```
