@@ -21,7 +21,7 @@ It uses non-invasive techniques to map the attack surface without directly inter
 
 ## Usage
 
--   `--update`: Update files in the `ripe_db` directory.The `--update` command is required on the first run to download the RIPE db.  It is highly recommended to update the RIPE database to the latest version before each usage to ensure greater precision in the results.
+-   `--update`: Update files in the `ripe_db` directory.
 -   `-v`, `--verbose`: Enable verbose mode.
 -   `-r`, `--regex`: Target Regex (example: `-r "\\bcompany"`).
 -   `-c`, `--csv`: Write results to a CSV file.
@@ -34,5 +34,5 @@ It uses non-invasive techniques to map the attack surface without directly inter
 bash
 
 ```bash
-python3 pcs.py --update -r "\\bcompany" -v -j -c -o output_filename
+python3 pcs.py -r "\\bcompany" -v -j -s -c -o output_filename
 ```

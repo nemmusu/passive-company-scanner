@@ -10,6 +10,7 @@ import signal
 import sys
 import csv
 import json
+from datetime import datetime
 import configparser
 from tqdm import tqdm
 
@@ -66,16 +67,17 @@ def shodan_query(api_key, query):
                                     else:
                                         row.append(f"{key}: {value}")
                         writer.writerow(row)
-
-
-        if args.json:
-            with open(f'{args.output}.json', 'a', encoding='utf-8') as jsonfile:
-                for match in data['matches']:
-                    try:
-                        json.dump(match, jsonfile, ensure_ascii=False, indent=4)
-                        jsonfile.write('\n')
-                    except UnicodeEncodeError:
-                        pass
+               
+                
+              
+            if args.json:
+                with open(f'{args.output}.json', 'a', encoding='utf-8') as jsonfile:
+                    for match in data['matches']:
+                        try:
+                            json.dump(match, jsonfile, ensure_ascii=False, indent=4)
+                            jsonfile.write('\n')
+                        except UnicodeEncodeError:
+                            pass
             fields_to_extract = [
     'ip_str', 'port', 'product', 'transport', 'version', 'data', 'os', 'cpe',
     'http.host', 'http.title', 'http.status', 'http.redirects', 'http.location',
@@ -194,6 +196,10 @@ def shodan_query(api_key, query):
                         logging.info("\n".join(row))
         else:
             pass
+    else:
+        print(f"Connection error: {response.status_code}, check the API key or connectivity. Exiting program...")
+        logging.info(f"Connection error: {response.status_code}, check the API key or connectivity. Exiting program...")
+        exit()
 
 def write_to_csv(data_dict):
     fieldnames = sorted(data_dict.keys())
@@ -244,6 +250,7 @@ def process_file(file_path, target_regex):
         print("Please consider downloading the database files again (--update).")
         logging.info(f"Error processing {file_path}: Compressed file ended before the end-of-stream marker was reached.")
         logging.info("Please consider downloading the database files again (--update).")
+
 def download_file(url, filename):
     response = requests.get(url, stream=True)
     total_size = int(response.headers.get('content-length', 0))
@@ -265,7 +272,7 @@ def download_files(update=False):
         ("https://ftp.ripe.net/ripe/dbase/split/ripe.db.inet6num.gz", "ripe_db/ripe.db.inet6num.gz")
     ]
     for url, filename in files_to_download:
-        if update or not os.path.exists(filename):
+        if update or not os.path.exists(filename) or not is_file_recent(filename):
             print(f"Downloading {filename}...")
             logging.info(f"Downloading {filename}...")
             try:
@@ -276,6 +283,10 @@ def download_files(update=False):
                 print(f"Error downloading {filename}: {e}")
                 logging.info(f"Error downloading {filename}: {e}")
                 continue
+
+def is_file_recent(filename):
+    file_time = datetime.fromtimestamp(os.path.getmtime(filename))
+    return (datetime.now() - file_time).days < 7
 
 def filter_target(data, target_regex):
     for key, value in data.items():
@@ -296,6 +307,7 @@ def log_and_print(message):
             print(message)
         except UnicodeEncodeError:
             pass
+
 if __name__ == "__main__":
     signal.signal(signal.SIGINT, handle_sigint)
     parser = argparse.ArgumentParser(
@@ -311,14 +323,25 @@ if __name__ == "__main__":
     parser.add_argument('-s', '--scan', action='store_true', help='Prints or logs only essential scan information: IP, port, version and product, operating system, CPE, and vulnerabilities (CSV and JSON files remain complete).')
     args = parser.parse_args()
     setup_logging(f'{args.output}.log')
-    if args.update:
-        download_files(update=True)
+
     gzip_files = glob.glob("ripe_db/*.gz")
     if not gzip_files:
-        print("No database files found. Please run the script with the --update option to download the necessary files.")
-        sys.exit(1)
+        response = input("Local files are missing. Do you want to download them? (Y/N): ").strip().lower()
+        if response == 'y':
+            download_files(update=False)
+        else:
+            print("No files to process. Exiting.")
+            sys.exit(0)
+    else:
+        all_recent = all(is_file_recent(file) for file in gzip_files)
+        if not all_recent:
+            response = input("Local files are not up to date. Do you want to download the update? (Y/N): ").strip().lower()
+            if response == 'y':
+                download_files(update=True)
+
     if not args.update and not args.regex:
         parser.error('The --update option can be used alone, but the -r option is required for scanning.')
+    
     log_and_print(f"Found {len(gzip_files)} files to process.")
     print("Scan started, please wait...")
     for file in gzip_files:
