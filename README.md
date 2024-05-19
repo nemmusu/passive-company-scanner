@@ -17,7 +17,7 @@ It uses non-invasive techniques to map the attack surface without directly inter
 1.  Clone or download the repository.
 2.  Make sure you have all the above requirements installed.
 3.  Modify the `api.conf` file with your Shodan API key.
-4.  Run the script using the command `python3 psc.py` followed by desired options.
+4.  Run the script using the command `python3 pcs.py` followed by desired options.
 
 ## Usage
 
@@ -34,5 +34,5 @@ It uses non-invasive techniques to map the attack surface without directly inter
 bash
 
 ```bash
-python3 psc.py --update -r "\\bcompany" -v -j -c -o output_filename
+python3 pcs.py --update -r "\\bcompany" -v -j -c -o output_filename
 ```
