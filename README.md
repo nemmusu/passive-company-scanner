@@ -23,7 +23,7 @@ It uses non-invasive techniques to map the attack surface without directly inter
 
 `python3 passive_company_scanner.py --update -r "\\bcompany" -v` 
 
--   `--update`: Update files in the `ripe_db` directory. It is highly recommended to update the RIPE database to the latest version before each usage to ensure greater precision in the results.
+-   `--update`: Update files in the `ripe_db` directory.The `--update` command is required on the first run to download the RIPE db.  It is highly recommended to update the RIPE database to the latest version before each usage to ensure greater precision in the results.
 -   `-v`, `--verbose`: Enable verbose mode.
 -   `-r`, `--regex`: Target Regex (example: `-r "\\bcompany"`).
 -   `-c`, `--csv`: Write results to a CSV file.
