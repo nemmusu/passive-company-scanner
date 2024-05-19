@@ -2,7 +2,7 @@
 
 ## Overview
 
-The Passive Company Scanner, by inputting a regex containing the company name (for example: \bcompany), utilizes data from the RIPE db to identify involved networks and leverages the Shodan API to retrieve detailed information about the identified IP addresses, thereby conducting a passive perimeter search, discovering open ports, and identifying potential vulnerabilities in the organization's infrastructure.
+The Passive Company Scanner, by inputting a python regex containing the company name (for example: \bcompany), utilizes data from the RIPE db to identify involved networks and leverages the Shodan API to retrieve detailed information about the identified IP addresses, thereby conducting a passive perimeter search, discovering open ports, and identifying potential vulnerabilities in the organization's infrastructure.
 It uses non-invasive techniques to map the attack surface without directly interacting with the targets. 
 
 ## Requirements
@@ -23,7 +23,7 @@ It uses non-invasive techniques to map the attack surface without directly inter
 
 -   `--update`: Update files in the `ripe_db` directory.
 -   `-v`, `--verbose`: Enable verbose mode.
--   `-r`, `--regex`: Target Regex (example: `-r "\bcompany"`).
+-   `-r`, `--regex`: Target Python Regex (example: `-r "\bcompany"`).
 -   `-c`, `--csv`: Write results to a CSV file.
 -   `-j`, `--json`: Write results to a JSON file.
 -   `-o`, `--output`: Base name for output files (log, csv, json).
